@@ -1,5 +1,7 @@
 package com.example.utils;
 
+
+
 public class UserData {
 	
 	private String uid;
@@ -8,10 +10,14 @@ public class UserData {
 	private int rank;
 	
 	public UserData(String id,String nme,String lastN,int rk) {
+		super();
 		this.uid = id;
 		this.name = nme;
 		this.lastName = lastN;
 		this.rank = rk;
+	}
+	public UserData() {
+		
 	}
 
 	public String getUid() {
@@ -45,5 +51,12 @@ public class UserData {
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "User { uid :"+ this.getUid()+", name :"+this.getName()+", lastname :"+this.getLastName()+", rank = "+String.valueOf(this.getRank());
+	}
+	
 
 }
