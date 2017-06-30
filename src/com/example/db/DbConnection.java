@@ -9,7 +9,8 @@ public class DbConnection {
 	
 	public Connection getConnection() throws Exception {
 		try{
-			String connectionURL = "jdbc:mysql://127.0.0.1:3307/authaccess";
+			//change to 172.17.0.2:3306 si on lexecute depuis le docker du webserver
+			String connectionURL = "jdbc:mysql://127.0.0.1:8080/authaccess";
 			Connection connection = null;
 			System.out.println("Trying to connect");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();

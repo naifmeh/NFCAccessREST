@@ -22,7 +22,7 @@ public class AccessHandler {
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println("USER ADDED : ---------- "+rs.getString("uid"));
+				System.out.println("USER EXISTING : ---------- "+rs.getString("uid"));
 				UserData user = new UserData(rs.getString("uid"),rs.getString("uname"),rs.getString("ulastname"),rs.getInt("rank"));
 				this.users.add(user);
 			}
