@@ -34,26 +34,33 @@ public class MyResource {
 		
 	}
 	
+	/*@Path("get/all")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsers() {
+		
+	}*/
+	
 	
 	@POST
-	@Path("/post/{uid}/{name}/{lname}/{rank}")
-	@Produces(MediaType.TEXT_PLAIN) 
-	public Response addUser(@PathParam("uid") String uid,@PathParam("name") String name,@PathParam("lname") String lname,
-			@PathParam("rank") int rank) {
+	@Path("/post/")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addUser(UserData user) {
 		
-		UserData user = new UserData(uid,name,lname,rank);
+		
 		int bl = (new AccessHandler()).addUid(user);
-		if(bl == 0) System.out.println("OK BL");
-		if(bl == 0) return Response.status(201).entity("UID : "+uid+ "entered in database").build();
-		else if(bl == -1) return Response.status(Status.CONFLICT).entity("User already in database").build();
-		return Response.status(500).build();
+		
+		if(bl == 0) return Response.status(201).entity("{'reponse':0}").build();
+		else if(bl == -1) return Response.status(Status.CONFLICT).entity("{'reponse':-2}").build();
+		return Response.status(500).entity("{'reponse':-1}").build();
 	}
 	
 	@PUT
 	@Path("/put")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(UserData user) {
+	public Response alterUser(UserData user) {
 		
 		
 		AccessHandler access = new AccessHandler();

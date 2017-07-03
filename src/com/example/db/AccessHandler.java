@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.json.JsonArray;
+
 import com.example.utils.UserData;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -85,6 +87,22 @@ public class AccessHandler {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public JsonArray getjsonDb() {
+		JsonArray jArray;
+		try(Connection db=(new DbConnection()).getConnection()) {
+			String sttmt = "SELECT * FROM "+DatabaseInf.TABLE_NAME+";";
+			//TODO : COMPLETE THIS FUNCTION
+			return null;
+		
+		
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	
