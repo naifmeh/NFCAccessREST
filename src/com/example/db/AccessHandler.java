@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 
 import com.example.utils.UserData;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
@@ -89,12 +93,30 @@ public class AccessHandler {
 		return -1;
 	}
 	
-	public JsonArray getjsonDb() {
+	public JsonObject getjsonDb() {
 		JsonArray jArray;
 		try(Connection db=(new DbConnection()).getConnection()) {
 			String sttmt = "SELECT * FROM "+DatabaseInf.TABLE_NAME+";";
-			//TODO : COMPLETE THIS FUNCTION
-			return null;
+			Statement stmt = db.createStatement();
+			ResultSet rs = stmt.executeQuery(sttmt);
+			JsonArrayBuilder jArrayBuilder = Json.createArrayBuilder();
+			while(rs.next()) {
+				String uid = rs.getString(DatabaseInf.TABLE_UID);
+				String name = rs.getString(DatabaseInf.TABLE_COL_NAME);
+				String lname = rs.getString(DatabaseInf.TABLE_LNAME);
+				int rank = rs.getInt(DatabaseInf.TABLE_RANK);
+				jArrayBuilder.add(Json.createObjectBuilder()
+						.add("uid", uid)
+						.add("name",name)
+						.add("lastName",lname)
+						.add("rank",rank));
+			}
+			jArray = jArrayBuilder.build();
+			JsonObject jObj = Json.createObjectBuilder().add("users",jArray)
+					.build();
+			System.out.println(jObj.toString());
+			
+			return jObj;
 		
 		
 		} catch(SQLException e) {

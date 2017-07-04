@@ -3,6 +3,7 @@ package com.example.test;
 
 import java.util.ArrayList;
 
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,12 +35,27 @@ public class MyResource {
 		
 	}
 	
-	/*@Path("get/all")
+	@Path("/get/details/{uid}")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON) 
+	public Response getUsrDetails(@PathParam("uid") String uid) 
+	{	
+		ArrayList<UserData> users = (new AccessHandler()).getAuthUsers(uid);
+		
+		if(users.size() > 0) return Response.status(Status.OK).entity(users.get(0)).build();
+		else return Response.status(403).build();
+		
+	}
+	
+	@Path("/get/all")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUsers() {
-		
-	}*/
+		JsonObject jObj = (new AccessHandler()).getjsonDb();
+		if(jObj != null) return Response.status(Status.OK).entity(jObj.toString()).build();
+		return Response.status(Status.EXPECTATION_FAILED).build();
+	}
 	
 	
 	@POST
